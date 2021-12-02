@@ -144,4 +144,3 @@ function getRandomColor() {
 //     }
 //     setInterval(kill, 100)
 // }
- 
