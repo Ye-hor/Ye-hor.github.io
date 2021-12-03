@@ -1,6 +1,8 @@
 const startBtn = document.querySelector('#start');
 const ratingBtn = document.querySelector('#rating');
+const backButtons = document.querySelectorAll('.back-button');
 const startGameScreen = document.querySelector('.start-game');
+const ratingScreen = document.querySelector('.rating');
 const timeSelectorScreen = document.querySelector('.time-selector');
 const gameScreen = document.querySelector('.game');
 const timeList = document.querySelector('#time-list');
@@ -12,20 +14,36 @@ const resetBtn = document.getElementById('reset-btn');
 const colors = ['#CD5C5C', '#F08080', '#FA8072', '#E9967A', '#FFA07A'];
 let time = 0;
 let score = 0;
-let rating = [];
+let rating = JSON.parse(localStorage.getItem('scoreInRating')) || [];
 let intervalId;
+
+const switchToScreen = screenSelector => {
+    const screens = document.querySelectorAll('.screen');
+    const activeScreen = document.querySelector(screenSelector);
+    screens.forEach(screen => {
+        screen.classList.remove('visible');
+    });
+
+    activeScreen.classList.add('visible');
+};
 
 startBtn.addEventListener('click', event => {
     event.preventDefault();
-    startGameScreen.classList.remove('visible');
-    timeSelectorScreen.classList.add('visible');
+    switchToScreen('.time-selector');
+});
+
+ratingBtn.addEventListener('click', () => {
+    switchToScreen('.rating');
 });
 
 resetBtn.addEventListener('click', () => {
-    gameScreen.classList.remove('visible');
-    startGameScreen.classList.add('visible');
-    score = 0;
-    time = 0;
+    anulation();
+});
+
+backButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        switchToScreen('.start-game');
+    });
 });
 
 timeList.addEventListener('click', event => {
@@ -35,8 +53,7 @@ timeList.addEventListener('click', event => {
 
     if (hasButtonClass) {
         time = parseInt(buttonClickedElement.getAttribute('data-time'));
-        timeSelectorScreen.classList.remove('visible');
-        gameScreen.classList.add('visible');
+        switchToScreen('.game');
         startGame();
     }
 });
@@ -48,6 +65,8 @@ function formatTime(rawTime) {
 
     return rawTime;
 }
+
+render(rating);
 
 // create TIME COUNTER - - - - -
 function startGame() {
@@ -83,16 +102,17 @@ board.addEventListener('click', event => {
 });
 
 function finishGame() {
-    // timeEl.parentNode.classList.add('hide')
     board.innerHTML = `<h1> Cчет: <span class="primary">${score}</span></h1>`;
     saveBtn.disabled = false;
-
-    saveBtn.addEventListener('click', () => {
-        rating.push(score);
-        localStorage.setItem('scoreInRating', JSON.stringify(rating));
-        render(rating);
-    });
 }
+
+saveBtn.addEventListener('click', () => {
+    rating.push(score);
+    rating = rating.sort((a, b) => b - a);
+    localStorage.setItem('scoreInRating', JSON.stringify(rating));
+    render(rating);
+    anulation();
+});
 
 function createRandomCircle() {
     const circle = document.createElement('div');
@@ -120,27 +140,21 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
-// function render(playerPoints) {
-//     let listItems = ""
-//     for (let i = 0; i < playerPoints.length; i++) {
-//         listItems += `
-//         <li>
-//         <a target='_blank' href='${playerPoints[i]}'>
-//         ${playerPoints[i]}
-//         </a>
-//         </li>
-//         `
-//     }
-//     ulEl.innerHTML = listItems
-// }
+function render(playerPoints) {
+    let listItems = '';
+    for (let i = 0; i < playerPoints?.length; i++) {
+        listItems += `
+        <li>
+        ${playerPoints[i]}
+        </li>
+        `;
+    }
+    ulEl.innerHTML = listItems;
+}
 
-// function winTheGame() {
-//     function kill() {
-//         const circle = document.querySelector('.circle')
+function anulation() {
+    switchToScreen('.start-game');
+    score = 0;
+    time = 0;
+}
 
-//         if (circle) {
-//             circle.click()
-//         }
-//     }
-//     setInterval(kill, 100)
-// }
