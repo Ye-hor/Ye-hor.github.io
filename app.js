@@ -8,16 +8,23 @@ const gameScreen = document.querySelector('.game');
 const timeList = document.querySelector('#time-list');
 const timeEl = document.querySelector('#time');
 const board = document.querySelector('#board');
-const ulEl = document.getElementById('ul-el');
+const ulEl5 = document.getElementById('ul-el5');
+const ulEl10 = document.getElementById('ul-el10');
+const ulEl20 = document.getElementById('ul-el20');
 const saveBtn = document.getElementById('save-btn');
 const resetBtn = document.getElementById('reset-btn');
+const clearRatingList = document.getElementById('clear-rating-list');
 const colors = ['#CD5C5C', '#F08080', '#FA8072', '#E9967A', '#FFA07A'];
 let timer = 0;
 let score = 0;
-let rating = JSON.parse(localStorage.getItem('scoreInRating')) || [];
+let rating5 = JSON.parse(localStorage.getItem('scoreInRating5')) || [];
+let rating10 = JSON.parse(localStorage.getItem('scoreInRating10')) || [];
+let rating20 = JSON.parse(localStorage.getItem('scoreInRating20')) || [];
 let intervalId;
 let time = 0;
-render(rating);
+render5(rating5);
+render10(rating10);
+render20(rating20);
 
 const switchToScreen = screenSelector => {
     const screens = document.querySelectorAll('.screen');
@@ -39,6 +46,19 @@ ratingBtn.addEventListener('click', () => {
 });
 
 resetBtn.addEventListener('click', () => {
+    anulation();
+});
+
+clearRatingList.addEventListener('dblclick', () => {
+    rating5 = [];
+    rating10 = [];
+    rating20 = [];
+    localStorage.clear('scoreInRating5');
+    localStorage.clear('scoreInRating10');
+    localStorage.clear('scoreInRating20');
+    render5(rating5);
+    render10(rating10);
+    render20(rating20);
     anulation();
 });
 
@@ -83,7 +103,7 @@ function decreaseTime() {
         finishGame();
     } else {
         let current = --timer;
-        console.log({ current, time: timer });
+        //console.log({ current, time: timer });
         setTime(current);
     }
 }
@@ -107,14 +127,28 @@ function finishGame() {
 }
 
 saveBtn.addEventListener('click', () => {
-    rating.push(score);
-    rating = rating.sort((a, b) => b - a);
-    localStorage.setItem('scoreInRating', JSON.stringify(rating));
-
+    if (time === 5) {
+        rating5.push(score);
+        rating5 = rating5.sort((a, b) => b - a);
+        localStorage.setItem('scoreInRating5', JSON.stringify(rating5));
+        render5(rating5);
+    }
+    if (time === 10) {
+        rating10.push(score);
+        rating10 = rating10.sort((a, b) => b - a);
+        localStorage.setItem('scoreInRating10', JSON.stringify(rating10));
+        render10(rating10);
+    }
+    if (time === 20) {
+        rating20.push(score);
+        rating20 = rating20.sort((a, b) => b - a);
+        localStorage.setItem('scoreInRating20', JSON.stringify(rating20));
+        render20(rating20);
+    }
     anulation();
 });
 
-function render(playerPoints) {
+function render5(playerPoints) {
     let listItems = '';
     for (let i = 0; i < playerPoints.length; i++) {
         listItems += `
@@ -123,7 +157,31 @@ function render(playerPoints) {
         </li>
         `;
     }
-    ulEl.innerHTML = listItems;
+    ulEl5.innerHTML = listItems;
+}
+
+function render10(playerPoints) {
+    let listItems = '';
+    for (let i = 0; i < playerPoints.length; i++) {
+        listItems += `
+        <li>
+        ${playerPoints[i]}
+        </li>
+        `;
+    }
+    ulEl10.innerHTML = listItems;
+}
+
+function render20(playerPoints) {
+    let listItems = '';
+    for (let i = 0; i < playerPoints.length; i++) {
+        listItems += `
+        <li>
+        ${playerPoints[i]}
+        </li>
+        `;
+    }
+    ulEl20.innerHTML = listItems;
 }
 
 function createRandomCircle() {
@@ -156,7 +214,7 @@ function anulation() {
     switchToScreen('.start-game');
     score = 0;
     timer = 0;
-    time - 0;
+    time = 0;
 }
 
 // function winTheGame() {
