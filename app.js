@@ -32,7 +32,7 @@ clearButton.addEventListener("click", () => {
   myGrocery = [];
   ulCreator(myGrocery);
 });
-
+ 
 const doneBtn = (index) => {
   myGrocery[index].isDone = !myGrocery[index].isDone;
   const groceryObject = {};
