@@ -8,9 +8,7 @@ const gameScreen = document.querySelector('.game');
 const timeList = document.querySelector('#time-list');
 const timeEl = document.querySelector('#time');
 const board = document.querySelector('#board');
-const ulEl5 = document.getElementById('ul-el5');
-const ulEl10 = document.getElementById('ul-el10');
-const ulEl20 = document.getElementById('ul-el20');
+const ulEl = document.getElementById('ul-el');
 const saveBtn = document.getElementById('save-btn');
 const resetBtn = document.getElementById('reset-btn');
 const colors = ['#CD5C5C', '#F08080', '#FA8072', '#E9967A', '#FFA07A'];
@@ -68,8 +66,6 @@ function formatTime(rawTime) {
     }
     return rawTime;
 }
-
-render(rating);
 
 // create TIME COUNTER - - - - -
 function startGame() {
@@ -134,7 +130,7 @@ function render(playerPoints) {
         </li>
         `;
     }
-    ulEl5.innerHTML = listItems;
+    ulEl.innerHTML = listItems;
 }
 
 function createRandomCircle() {
