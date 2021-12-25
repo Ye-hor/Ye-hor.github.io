@@ -36,6 +36,12 @@ h1 {
     font-size: 4rem;
 }
 
+h2 {
+    font-size: 50px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
 .screen {
     display: flex;
     flex-direction: column;
@@ -136,4 +142,14 @@ h1 {
 
 .table {
     display: flex;
+    overflow-y: auto;
+}
+
+.uls {
+    list-style-type: none;
+    padding: 0px 40px;
+}
+
+.clear-rating-list {
+    margin-right: 30px;
 }
