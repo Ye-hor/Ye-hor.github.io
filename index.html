@@ -1,58 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Aim Training</title>
+    <link rel="stylesheet" href="index.css" />
+    <title>Grocery List</title>
   </head>
   <body>
-    <div class="screen start-game visible">
-      <h1>Aim Training</h1>
-      <a href="#" class="start" id="start">Start Game</a>
-      <a href="#" id="rating">Rating</a>
+    <div class="grocery-container">
+      <h1 id="title">Grocery List</h1>
+      <div class="input-and-ul">
+        <input type="text" id="input-element" placeholder="write item" />
+        <button id="submit-button">Submit</button>
+        <div>
+          <ul id="ul-element"></ul>
+        </div>
+      </div>
     </div>
-    
-    <div class="screen rating">
-      <h1>Rating Table</h1>
-      <ul id="ul-el"></ul>
-      <button class="time-btn back-button">Back</button>
-    </div>
+    <button id="clear">Clear all</button>
 
-    <div class="screen time-selector">
-      <h1>Choose time</h1>
-      <ul class="time-list" id="time-list">
-        </li>
-        <li>
-          <button class="time-btn" data-time="5">
-            5 сек
-          </button>
-        </li>
-        <li>
-          <button class="time-btn" data-time="10">
-            10 сек
-          </button>
-        </li>
-        <li>
-          <button class="time-btn" data-time="20">
-            20 сек
-          </button>
-        </li>
-        <li>
-          <button class="time-btn" data-time="30">
-            30 сек
-          </button>
-        </li>
-      </ul>
-      <button class="time-btn back-button">Back</button>
-    </div>
-
-    <div class="screen game">
-      <button id="reset-btn" class="reset">Restart</button>
-      <button id="save-btn" class="reset" disabled="true">Save score</button>
-      <h3>Осталось <span id="time">00:00</span></h3>
-      <div class="board" id="board"></div>
-    </div>
-    <script src="app.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
