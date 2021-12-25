@@ -17,6 +17,7 @@ let score = 0;
 let rating = JSON.parse(localStorage.getItem('scoreInRating')) || [];
 let intervalId;
 let time = 0;
+render(rating);
 
 const switchToScreen = screenSelector => {
     const screens = document.querySelectorAll('.screen');
@@ -109,15 +110,7 @@ saveBtn.addEventListener('click', () => {
     rating.push(score);
     rating = rating.sort((a, b) => b - a);
     localStorage.setItem('scoreInRating', JSON.stringify(rating));
-    if (time === 5) {
-        render(rating);
-    }
-    if (time === 10) {
-        render(rating);
-    }
-    if (time === 20) {
-        render(rating);
-    }
+
     anulation();
 });
 
